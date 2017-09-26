@@ -1,8 +1,13 @@
 package com.arip.websocket;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+
+import java.security.Principal;
 
 /**
  * Created by Arip Hidayat on 9/25/2017.
@@ -10,9 +15,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class MessageController {
 
-    @MessageMapping("/chat")
-    @SendTo("/topic/messages")
-    public Message onMessage(Message msg) {
-        return new Message(msg.getFrom(), msg.getContent());
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
+    @MessageMapping("/chat/{to}")
+    public void onMessage(@Payload Message msg, @DestinationVariable("to") String to, Principal principal) {
+        msg.setFrom(principal.getName());
+        simpMessagingTemplate.convertAndSend("/user/" + to + "/topic/messages", msg);
     }
 }

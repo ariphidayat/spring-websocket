@@ -6,17 +6,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="./app.js"></script>
 </head>
-<body onload="disconnect()">
+<body onload="init()">
     <a href="/logout">Sign Out</a>
     <div>
-        <input id="from" type="text" placeholder="Nickname"/>
-        <button id="connect" onclick="connect();">Connect</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
-    </div>
-    <br />
-    <div id="log">
-        <input id="content" type="text" placeholder="Write a Message..."/>
+        <input id="to" type="text" placeholder="To..."/>
+        <input id="content" type="text" placeholder="Message..."/>
         <button id="sendMessage" onclick="sendMessage();">Send</button>
+    </div>
+    <div id="log">
         <p id="response"></p>
     </div>
 </body>
