@@ -27,5 +27,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.security:spring-security-messaging')
+	compile('org.springframework.security.oauth:spring-security-oauth2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
