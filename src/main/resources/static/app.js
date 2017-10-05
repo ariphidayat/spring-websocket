@@ -3,11 +3,12 @@ var stompClient = null;
 function init() {
     var socket = new SockJS('/chat');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function(frame) {
-        stompClient.subscribe('/user/topic/messages', function(message) {
-            showMessage(JSON.parse(message.body));
-        });
-    });
+    stompClient.connect({}, stompSuccess);
+}
+
+function stompSuccess() {
+    stompClient.subscribe('/topic/messages', showMessage);
+    stompClient.subscribe('/user/queue/messages', showMessage);
 }
 
 function sendMessage() {
@@ -16,9 +17,10 @@ function sendMessage() {
     stompClient.send("/app/chat/" + to, {}, JSON.stringify({'content':content}));
 }
 
-function showMessage(message) {
-    var response = document.getElementById('response');
+function showMessage(res) {
+    var message = JSON.parse(res.body);
+    var log = document.getElementById('log');
     var p = document.createElement('p');
     p.appendChild(document.createTextNode(message.from + ": " + message.content));
-    response.appendChild(p);
+    log.appendChild(p);
 }

@@ -21,6 +21,10 @@ public class MessageController {
     @MessageMapping("/chat/{to}")
     public void onMessage(@Payload Message msg, @DestinationVariable("to") String to, Principal principal) {
         msg.setFrom(principal.getName());
-        simpMessagingTemplate.convertAndSendToUser(to,"/topic/messages", msg);
+        if (to.equals("public")) {
+            simpMessagingTemplate.convertAndSend("/topic/messages", msg);
+        }else{
+            simpMessagingTemplate.convertAndSendToUser(to, "/queue/messages", msg);
+        }
     }
 }
