@@ -7,4 +7,4 @@ security:
       scope: read, write
       accessTokenValiditySeconds: 3600
 
-logging.level.org.springframework: DEBUG
+logging.level.org.springframework: TRACE
