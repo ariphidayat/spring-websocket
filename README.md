@@ -4,7 +4,7 @@
 On command line you can do the following command :
 
 ```
-$ ./gradlew bootRun
+$ mvn tomcat7:run
 ```
 
 and go to a browser at http://localhost:8080
