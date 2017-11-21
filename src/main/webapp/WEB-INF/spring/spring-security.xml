@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <sec:http pattern="/resources/**" security="none" />
+
+    <sec:http auto-config="true">
+        <sec:intercept-url pattern="/chat/**" access="permitAll"/>
+        <sec:intercept-url pattern="/app/**" access="permitAll"/>
+        <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
+        <sec:logout/>
+    </sec:http>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="authProvider"/>
+    </sec:authentication-manager>
+
+    <bean id="authProvider" class="com.arip.websocket.AuthProvider"/>
+
+    <sec:websocket-message-broker same-origin-disabled="true"/>
+
+</beans>
