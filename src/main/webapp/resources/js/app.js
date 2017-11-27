@@ -3,6 +3,7 @@ var stompClient = null;
 function init() {
     var socket = new SockJS('/chat');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null;
     stompClient.connect({}, stompSuccess);
 }
 
