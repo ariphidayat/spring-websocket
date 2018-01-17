@@ -1,7 +1,8 @@
 var ws = null;
 
 function connect() {
-    ws = new WebSocket('ws://localhost:8080/chat');
+    var params = (new URL(document.location)).searchParams;
+    ws = new WebSocket('ws://localhost:8080/chat?username=' + params.get('username'));
     ws.onmessage = function (res) {
         showMessage(res.data);
     }
@@ -14,8 +15,9 @@ function disconnect() {
 }
 
 function sendMessage() {
+    var to = document.getElementById('to').value;
     var content = document.getElementById('content').value;
-    ws.send(JSON.stringify({'content':content}));
+    ws.send(JSON.stringify({'to': to, 'content' : content}));
 }
 
 function showMessage(message) {

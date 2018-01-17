@@ -5,8 +5,10 @@
     <script src="./app.js"></script>
 </head>
 <body onload="connect()">
+    <p>call using <a href="http://localhost:8080?username=your_username">http://localhost:8080?username=your_username</a> </p>
     <a href="#" onclick="disconnect()">Sign Out</a>
     <div>
+        <input id="to" type="text" placeholder="To..."/>
         <input id="content" type="text" placeholder="Message..."/>
         <button id="sendMessage" onclick="sendMessage();">Send</button>
     </div>
