@@ -1,26 +1,26 @@
-var stompClient = null;
+var ws = null;
 
-function init() {
-    var socket = new SockJS('/chat');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, stompSuccess);
+function connect() {
+    ws = new WebSocket('ws://localhost:8080/chat');
+    ws.onmessage = function (res) {
+        showMessage(res.data);
+    }
 }
 
-function stompSuccess() {
-    stompClient.subscribe('/topic/messages', showMessage);
-    stompClient.subscribe('/user/queue/messages', showMessage);
+function disconnect() {
+    if (ws != null) {
+        ws.close();
+    }
 }
 
 function sendMessage() {
-    var to = document.getElementById('to').value;
     var content = document.getElementById('content').value;
-    stompClient.send("/app/chat/" + to, {}, JSON.stringify({'content':content}));
+    ws.send(JSON.stringify({'content':content}));
 }
 
-function showMessage(res) {
-    var message = JSON.parse(res.body);
+function showMessage(message) {
     var log = document.getElementById('log');
     var p = document.createElement('p');
-    p.appendChild(document.createTextNode(message.from + ": " + message.content));
+    p.appendChild(document.createTextNode(message));
     log.appendChild(p);
 }
