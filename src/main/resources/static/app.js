@@ -1,8 +1,7 @@
 var ws = null;
 
 function connect() {
-    var params = (new URL(document.location)).searchParams;
-    ws = new WebSocket('ws://localhost:8080/chat?username=' + params.get('username'));
+    ws = new WebSocket('ws://localhost:8080/chat');
     ws.onmessage = function (res) {
         showMessage(res.data);
     }
